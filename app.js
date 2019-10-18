@@ -9,6 +9,7 @@ app.use(timeStamp)
 
 app.use((req, res, next) => {
 
+  // Emitted when the response has been sent. 
   res.on('finish', () => {
     const endTime = new Date()
     res.locals.endTime = endTime
@@ -17,13 +18,14 @@ app.use((req, res, next) => {
     console.log(`${res.locals.stringOutput}  |  Total time: ${res.locals.duration}ms`)
   })
 
-  res.on('close', () => {
-    const endTime = new Date()
-    res.locals.endTime = endTime
-    res.locals.duration = res.locals.endTime - res.locals.startTime
-    console.log(`Response time:${res.locals.endTime}`)
-    console.log(`${res.locals.stringOutput}  |  Total time: ${res.locals.duration}ms`)
-  })
+  // Indicates that the underlying connection was terminated.
+  // res.on('close', () => {
+  //   const endTime = new Date()
+  //   res.locals.endTime = endTime
+  //   res.locals.duration = res.locals.endTime - res.locals.startTime
+  //   console.log(`Response time:${res.locals.endTime}`)
+  //   console.log(`${res.locals.stringOutput}  |  Total time: ${res.locals.duration}ms`)
+  // })
 
   next()
 })
